@@ -1,14 +1,4 @@
 #!/bin/bash
-
-# ======================= CCTMv5.4.X Build Script ========================= 
-# Usage: bldit.cctm >&! bldit.cctm.log                                   
-# Requirements: I/O API & netCDF libraries, a Fortran compiler,               
-#               and MPI for multiprocessor computing                     
-#
-# To report problems or request help with this script/program:           
-#             http://www.cmascenter.org
-# ======================================================================= 
-
 #> Set Compiler Identity by User Input: Options -> intel | pgi | gcc
  export compiler=gcc
  export Vrsn=12.2
@@ -20,7 +10,7 @@
 
  set echo
 
-# =======================================================================
+ # =======================================================================
 #> Begin User Input Section
 # =======================================================================
 
@@ -32,12 +22,12 @@
 
 #> Controls for managing the source code and MPI compilation
 CompileBLDMAKE=true      #> Recompile the BLDMAKE utility from source
-                         #>   comment out to use an existing BLDMAKE executable 
+                         #>   comment out to use an existing BLDMAKE executable
 CopySrc=true             #> copy the source files into the build directory
 #set CopySrcTree=true    #> copy the source files and directory tree into the build directory
-#set MakeFileOnly=true   #> uncomment to build a Makefile, but do not compile; 
+#set MakeFileOnly=true   #> uncomment to build a Makefile, but do not compile;
                          #>   comment out to compile the model (default if not set)
-#set build_mech                        #> uncomment to build mechanism source code files using the 
+#set build_mech                        #> uncomment to build mechanism source code files using the
                                        #>   chemmech utility.
 
 #> Below are chemmech options for revising the mechanism definitions file. The option needs information on the
@@ -50,15 +40,15 @@ CopySrc=true             #> copy the source files into the build directory
 #>    If NAMELISTS_LIST_ATOMS equals F, an additional ASCII file contains the information.
       #setenv NAMELISTS_LIST_ATOMS T
 
-#clobber_mech=true                     #> when commented, the bldit_mech.csh script will halt if 
+#clobber_mech=true                     #> when commented, the bldit_mech.csh script will halt if
                                        #>   newly created mechanism files are attempting replace
                                        #>   existing ones. When uncommented, the existing files
                                        #>   will be overwritten.
-ParOpt=true             #> uncomment to build a multiple processor (MPI) executable; 
+ParOpt=true             #> uncomment to build a multiple processor (MPI) executable;
                         #>   comment out for a single processor (serial) executable
 #DistrEnv=true                         #> uncomment to distribute environmental variables to multiple machines
                                        #>   comment out for a single processor (serial) executable (MPI only)
-#build_parallel_io=true   #> uncomment to build with parallel I/O (pnetcdf); 
+#build_parallel_io=true   #> uncomment to build with parallel I/O (pnetcdf);
                               #>   comment out to use standard netCDF I/O
 #Debug_CCTM=true        #> uncomment to compile CCTM with debug option equal to TRUE
                         #>   comment out to use standard, optimized compile process
@@ -71,9 +61,9 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 
 #DDM3D_CCTM=True                       #> uncomment to compile CCTM with DD3D activated
                                        #>   comment out to use standard process
-#> Two-way WRF-CMAQ 
-#build_twoway=True                     #> uncomment to build WRF-CMAQ twoway; 
-                                       #>   comment out for off-line chemistry 
+#> Two-way WRF-CMAQ
+#build_twoway=True                     #> uncomment to build WRF-CMAQ twoway;
+                                       #>   comment out for off-line chemistry
 
 #> Potential vorticity free-troposphere O3 scaling
 #potvortO3=True
@@ -86,38 +76,38 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
  else
      VRSN = v54                 #> model configuration ID for CMAQ
  fi
- 
+
  EXEC=CCTM_${VRSN}.exe          #> executable name
  CFG=CCTM_${VRSN}.cfg          #> configuration file name
 
  if [ $build_twoway == "True" ]; then            # WRF Version used for WRF-CMAQ Model (must be v4.4+)
     WRF_VRSN=v4.4
- fi   
+ fi
 
 #========================================================================
 #> CCTM Science Modules
 #========================================================================
-#> NOTE: For the modules with multiple options, a note is 
-#>   provided on where to look in the CCTM source code 
-#>   archive for a list of the possible settings. Users 
+#> NOTE: For the modules with multiple options, a note is
+#>   provided on where to look in the CCTM source code
+#>   archive for a list of the possible settings. Users
 #>   may also refer to the CMAQ documentation.
 
- ModGrid=grid/cartesian            #> grid configuration module 
- 
+ ModGrid=grid/cartesian            #> grid configuration module
+
  DepMod=m3dry                      #> m3dry or stage
 # DepMod=stage
  ModAdv=wrf_cons                   #> 3-D Advection Scheme [Options: wrf_cons (default), local_cons]
  ModHdiff=hdiff/multiscale         #> horizontal diffusion module
  ModVdiff=vdiff/acm2_${DepMod}     #> vertical diffusion module (see $CMAQ_MODEL/CCTM/src/vdiff)
- ModDepv=depv/${DepMod}            #> deposition velocity calculation module 
+ ModDepv=depv/${DepMod}            #> deposition velocity calculation module
                                             #>     (see $CMAQ_MODEL/CCTM/src/depv)
  ModEmis=emis/emis                 #> in-line emissions module
- ModBiog=biog/beis4                #> BEIS3 in-line emissions module 
+ ModBiog=biog/beis4                #> BEIS3 in-line emissions module
  ModMegBiog=biog/megan3            #> MEGAN3 in-line emissions module
  ModPlmrs=plrise/smoke             #> in-line emissions plume rise
- ModCgrds=spcs/cgrid_spcs_nml      #> chemistry species configuration module 
+ ModCgrds=spcs/cgrid_spcs_nml      #> chemistry species configuration module
                                    #>     (see $CMAQ_MODEL/CCTM/src/spcs)
- ModPhot=phot/inline               #> photolysis calculation module 
+ ModPhot=phot/inline               #> photolysis calculation module
                                    #>     (see $CMAQ_MODEL/CCTM/src/phot)
  Mechanism=cb6r3_ae7_aq            #> chemical mechanism (see $CMAQ_MODEL/CCTM/src/MECHS)
  ModMech=MECHS/${Mechanism}
@@ -132,25 +122,25 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 #     ModCloud=cloud/acm_cracmm            # > cloud chemistry module (see $CMAQ_MODEL/CCTM/src/cloud)
 # fi
 
-# Gas chem solver 
+# Gas chem solver
 # if [ ${Mechanism} == cb6r5m_ae7_aq ]; then  #> Gas-phase chemistry solver options ($CMAQ_MODEL/CCTM/src/gas)
 #     export ChemSolver=ros3                  #> ros3 (or smvgear) are system independent
-# else                                      
+# else
      export ChemSolver=ebi                   #> [ default for most mechanisms: ebi ]
 # fi
-                                         
-# if ( $ChemSolver == ebi ) then             
+
+# if ( $ChemSolver == ebi ) then
     ModGas=gas/${ChemSolver}_${Mechanism}
 # else
 #    ModGas=gas/${ChemSolver}
 # endif
 
 # ModGas=gas/ebi_${Mechanism}       #> gas-phase chemistry solver (see $CMAQ_MODEL/CCTM/src/gas)
-#                                            #> use gas/ros3 or gas/smvgear for a solver independent 
+#                                            #> use gas/ros3 or gas/smvgear for a solver independent
 #                                            #  of the photochemical mechanism
  ModUtil=util/util                  #> CCTM utility modules
  ModDiag=diag                       #> CCTM diagnostic modules
- Tracer=trac0                      #> tracer configuration directory under 
+ Tracer=trac0                      #> tracer configuration directory under
                                             #>   $CMAQ_MODEL/CCTM/src/MECHS [ default: no tracer species ]
  ModPa=procan/pa                  #> CCTM process analysis
  ModPvO3=pv_o3                      #> potential vorticity from the free troposphere
@@ -190,14 +180,14 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 #============================================================================================
 
 #> Check for CMAQ_REPO and CMAQ_LIB settings:
- if [ ! -e $CMAQ_REPO ] && [ ! -e $CMAQ_LIB ] 
+ if [ ! -e $CMAQ_REPO ] && [ ! -e $CMAQ_LIB ]
  then
     echo "   $CMAQ_REPO or $CMAQ_LIB directory not found"
 ###    exit 1
  fi
 
 #> If $CMAQ_MODEL is not set, default to $CMAQ_REPO
- if [ CMAQ_MODEL ] 
+ if [ CMAQ_MODEL ]
  then
     echo "         Model repository path: $CMAQ_MODEL"
  else
@@ -207,9 +197,9 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 
 #> This script was written for Linux hosts only. If
 #> the host system is not Linux, produce an error and stop
- BLD_OS=`uname -s`       
+ BLD_OS=`uname -s`
     echo " BLD_OS $BLD_OS"
- if [ $BLD_OS != 'Linux' ] 
+ if [ $BLD_OS != 'Linux' ]
  then
     echo "   $BLD_OS -> wrong bldit script for host!"
 ###    exit 1
@@ -217,9 +207,9 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 
 #> If the two-way, coupled WRF-CMAQ model is being built,
 #> then just generate the Makefile. Don't compile.
-# if [ build_twoway ] 
+# if [ build_twoway ]
 # then
-#    MakeFileOnly=true   
+#    MakeFileOnly=true
 #    ModTwoway=twoway
 # fi
 
@@ -236,18 +226,18 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 ### endif
 
 
- if [ "$DepMod" == "m3dry" ] 
+ if [ "$DepMod" == "m3dry" ]
  then
     cpp_depmod='-Dm3dry_opt'
     echo "cpp_depmod $cpp_depmod"]
- elif [ "$DepMod" == "stage" ] 
+ elif [ "$DepMod" == "stage" ]
  then
     cpp_depmod='-Dstage_opt'
  fi
 
 #> Set variables needed for multiprocessor and serial builds
- if [ ParOpt ] 
- then    
+ if [ ParOpt ]
+ then
     #Multiprocessor system configuration
     echo "   Parallel; set MPI flags"
     ModStenex=STENEX/se
@@ -272,9 +262,9 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
     Str1=("// Parallel / Include message passing definitions")
     Str2=("include SUBST_MPI mpif.h;")
     # Distribute Environment to different machines if not done automatically
-    # This is new but I'm ignoring it for the time being 
+    # This is new but I'm ignoring it for the time being
 #    if ( $?DistrEnv ) then
-#      set PAR = ($PAR -Dcluster) 
+#      set PAR = ($PAR -Dcluster)
 #    endif
  else
     #Serial system configuration
@@ -291,7 +281,7 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
     LIB2="${ioapi_lib} ${extra_lib}"
     Str1 =
     Str2 =
- fi 
+ fi
 
 echo "End Multiprocessing"
 #> if DDM-3D is set, add the pre-processor flag for it.
@@ -307,16 +297,16 @@ echo "End Multiprocessing"
 # if ( $?build_mech ) then
 #
 #    # Note: modifying existing or creating new chemical mechanisms
-#    # can lead to unstable or highly inaccurate representations of 
+#    # can lead to unstable or highly inaccurate representations of
 #    # atmospheric chemical predictions when applying the EBI solvers.
-#    # EBI solvers are highly characterized and tested before 
-#    # application. The CMAQ development team recommends using the 
+#    # EBI solvers are highly characterized and tested before
+#    # application. The CMAQ development team recommends using the
 #    # generalized solvers, Rosenbrock or Gear, with user-defined
 #    # mechanisms.
 #
 #    # Because the bldit_cctm script is executing the bldit_mech
-#    # processor, we will assume that the source location for the new 
-#    # mechanism files is in the CMAQ repo. There will also be an 
+#    # processor, we will assume that the source location for the new
+#    # mechanism files is in the CMAQ repo. There will also be an
 #    # error check for overwriting an existing mechanism that can be
 #    # disabled using the mech_clobber variable above.
 #    setenv MECH_SRC ${CMAQ_REPO}/CCTM/src/${ModMech}
@@ -343,14 +333,14 @@ echo "End Multiprocessing"
 
 #> free trop. O3 potential vorticity scaling
  if [ potvortO3 ]
- then 
+ then
     POT=( -Dpotvorto3 )
  else
     POT=""
- fi 
+ fi
     echo " POT $POT "
 
-#> Set and create the "BLD" directory for checking out and compiling 
+#> Set and create the "BLD" directory for checking out and compiling
 #> source code. Move current directory to that build directory.
  Bld=$CMAQ_HOME/CCTM/scripts/BLD_CCTM_${VRSN}_${compilerString}
  if [ ! -e "$Bld" ]
@@ -367,8 +357,8 @@ echo "End Multiprocessing"
     echo " Bld $Bld "
 
 #> Set locations for the include files of various modules
- ICL_PAR=$GlobInc/fixed/mpi         
- ICL_CONST=$GlobInc/fixed/const       
+ ICL_PAR=$GlobInc/fixed/mpi
+ ICL_CONST=$GlobInc/fixed/const
  ICL_FILES=$GlobInc/fixed/filenames
  ICL_EMCTL=$GlobInc/fixed/emctrl
 # ICL_PA=$GlobInc/procan/$PAOpt
@@ -438,13 +428,13 @@ echo "End Multiprocessing"
 #> 3-D Advection Options
  if [ $ModAdv==wrf_cons ]
  then
-    ModCpl=couple/gencoor_wrf_cons    #> unit conversion and concentration coupling module 
+    ModCpl=couple/gencoor_wrf_cons    #> unit conversion and concentration coupling module
                                                #>     (see $CMAQ_MODEL/CCTM/src/couple)
-    ModHadv=hadv/ppm                   #> horizontal advection module   
-    ModVadv=vadv/wrf_cons              #> Vertical advection module                             
+    ModHadv=hadv/ppm                   #> horizontal advection module
+    ModVadv=vadv/wrf_cons              #> Vertical advection module
  elif [ $ModAdv==local_cons ]
  then
-    ModCpl=couple/gencoor_local_cons  #> unit conversion and concentration coupling module 
+    ModCpl=couple/gencoor_local_cons  #> unit conversion and concentration coupling module
                                                #>     (see $CMAQ_MODEL/CCTM/src/couple)
     ModHadv=hadv/ppm                     #> horizontal advection module
     ModVadv=vadv/local_cons              #> Vertical advection module
@@ -453,7 +443,7 @@ echo "End Multiprocessing"
  echo " Before Config File "
 
 # ============================================================================
-#> Create Config File 
+#> Create Config File
 # ============================================================================
 
 Cfile=${Bld}/${CFG}.bld      # Config Filename
@@ -657,7 +647,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "// " $text                                                  >> $Cfile
  echo "// options are trac0, trac1"                                >> $Cfile
  echo "Module ${ModTrac};"                                         >> $Cfile
- echo 
+ echo
 
  if [ potvortO3 ]
  then
@@ -738,7 +728,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
    echo "End bldmake"
 # fi
 
-#> Relocate to the BLD_* directory 
+#> Relocate to the BLD_* directory
  cd $Bld
 
 #> Set multiprocessor/serial options for BLDMAKE execution
@@ -762,10 +752,10 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  then
     bld_flags="${bld_flags}"
  elif [ CopySrcTree ]
- then   
+ then
     bld_flags="${bld_flags} -co"
- else 
-    bld_flags="{bld_flags} -git_local" # Run BLDMAKE with source code in 
+ else
+    bld_flags="{bld_flags} -git_local" # Run BLDMAKE with source code in
                                               # version-controlled git repo
                                               # $Cfile = ${CFG}.bld
  fi
@@ -787,7 +777,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
 
    echo "START Blder ___***____ $Blder $bld_flags $Cfile"
 #> Run BLDMAKE with source code in build directory
- $Blder $bld_flags $Cfile   
+ $Blder $bld_flags $Cfile
 
 #> Rename Makefile to specify compiler option and link back to Makefile
 #! This needs editing for two-way
@@ -798,7 +788,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
    rm Makefile
    ln -s Makefile.$compilerString Makefile
  fi
- 
+
 #> Alert user of error in BLDMAKE if it ocurred
    echo "ALERT Makefile"
  if [ $status != 0 ]
@@ -807,7 +797,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
     exit 1
  endif
 
-#> Preserve old Config file, if it exists, before moving new one to 
+#> Preserve old Config file, if it exists, before moving new one to
 #> build directory.
    echo "Last element"
  if [ -e "$Bld/${CFG}" ]
@@ -823,25 +813,25 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
 #
 ##> Check if the user has git installed on their system
 #  git --version >& /dev/null
-#  
+#
 #  if ($? == 0) then
 #   set git_check
 #  endif
-# 
+#
 #  if ($?git_check) then
 #
 #    cd $CMAQ_HOME/CCTM/scripts
-#  
+#
 #    # Downlad WRF repository from GitHub and put CMAQv5.4 into it
 #    set WRF_BLD = BLD_WRF${WRF_VRSN}_CCTM_${VRSN}_${compilerString}
 #    setenv wrf_path ${CMAQ_HOME}/CCTM/scripts/${WRF_BLD}
 #    setenv WRF_CMAQ 1
 #
-#    if ( ! -d $WRF_BLD ) then 
+#    if ( ! -d $WRF_BLD ) then
 #      git clone --branch ${WRF_VRSN} https://github.com/wrf-model/WRF.git ./$WRF_BLD >& /dev/null
 #      cd $wrf_path
 #      mv $Bld ./cmaq
-#  
+#
 #      # Configure WRF
 #        ./configure <<EOF
 #        ${WRF_ARCH}
@@ -849,7 +839,7 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
 #EOF
 #
 #    else
-#      # Clean-up 
+#      # Clean-up
 #      rm -r $Bld
 #      cd $wrf_path
 #    endif
@@ -861,9 +851,10 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
 #
 #   endif
 #
-# endif 
+# endif
 
 
 
 ###exit
+
 
