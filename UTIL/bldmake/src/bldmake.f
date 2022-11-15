@@ -164,8 +164,8 @@
         Stop
       End If
 
- !    write( *,* ) "cfg: ", cfgfile
- !    write( *,* ) "nargs: ", nargs
+      write( *,* ) "cfg: ", cfgfile
+      write( *,* ) "nargs: ", nargs
 
 ! check for run options
       Do n = 1, nargs-1
