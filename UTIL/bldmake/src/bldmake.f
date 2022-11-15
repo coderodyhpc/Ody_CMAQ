@@ -73,11 +73,11 @@
       Close ( unit=lfn )
 
 ! GIT repository
-      write (*,*) "GIT"
+      write (*,*) "GIT ",status
       Call git_export( status )
 
 ! create Makefile
-      write (*,*) "Create MAKEFILE ",twoway
+      write (*,*) "!!!!! Create MAKEFILE ",twoway
       if (twoway) then
          Open ( unit=lfn, file='Makefile.twoway', iostat=status )
       else
