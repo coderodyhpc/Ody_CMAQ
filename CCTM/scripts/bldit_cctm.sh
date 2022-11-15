@@ -237,7 +237,7 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
  if [ "$DepMod" == "m3dry" ]
  then
     cpp_depmod='-Dm3dry_opt'
-    echo "cpp_depmod $cpp_depmod"]
+    echo "cpp_depmod $cpp_depmod"
  elif [ "$DepMod" == "stage" ]
  then
     cpp_depmod='-Dstage_opt'
