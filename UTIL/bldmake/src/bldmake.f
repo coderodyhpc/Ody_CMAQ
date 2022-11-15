@@ -56,9 +56,11 @@
       Integer n
 
 ! call Setup routine to process command line arguments
+      write (*,*) "At BLDMAKE!!!"
       Call setup( cfgFile )
 
 ! open cfgFile
+      write (*,*) "open cfgFile"
       Open ( unit=lfn, file=cfgFile, status='old', iostat=status )
       If ( status .Ne. 0 ) Then
         Write( *,'(" Open error number:",i5)') status
@@ -66,13 +68,16 @@
       End If
 
 ! read CFG file
+      write (*,*) "read CFG"
       Call readCFG( lfn )
       Close ( unit=lfn )
 
 ! GIT repository
+      write (*,*) "GIT"
       Call git_export( status )
 
 ! create Makefile
+      write (*,*) "Create MAKEFILE ",twoway
       if (twoway) then
          Open ( unit=lfn, file='Makefile.twoway', iostat=status )
       else
@@ -80,6 +85,7 @@
       end if
       If ( status .ne. 0 ) Call error_msg( 'Cannot create FILE [Makefile]' )
 
+      write (*,*) "Calling MAKEFILE "
       Call makefile( lfn, cfgFile )
 
       Close (unit=lfn)
@@ -90,6 +96,7 @@
       If ( .not. makefo ) Then
         Call RunMake( status )
       End If
+      write (*,*) "END BLDMAKE!!!"
 
       Stop
       End Program bldmake
