@@ -77,7 +77,7 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 #     echo "DDM3D"
 #     VRSN=v54_DDM3D             #> model configuration ID for CMAQ_DDM
 # else
-     VRSN = v54                 #> model configuration ID for CMAQ
+     VRSN=v54                 #> model configuration ID for CMAQ
 # fi
 
  EXEC=CCTM_${VRSN}.exe          #> executable name
