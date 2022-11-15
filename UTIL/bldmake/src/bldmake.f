@@ -140,7 +140,8 @@
       git_local = .False.
       repo      = ' '
       reporoot  = ' '
-
+      write (*,*) "##################"
+      write (*,*) "SETUP"
 ! check number of arguments on command line
       nargs = IARGC()  ! non-standard compiler extension returns the number of arguments
       If ( nargs .Eq. 0 ) Then
