@@ -661,13 +661,13 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "Module ${ModTrac};"                                         >> $Cfile
  echo
 
- if [ potvortO3 ]
- then
-    text="use potential vorticity free-troposphere O3 scaling"
-    echo "// options are" $text                                    >> $Cfile
-    echo "Module ${ModPvO3};"                                      >> $Cfile
-    echo                                                           >> $Cfile
- fi
+# if [ potvortO3 ]
+# then
+#    text="use potential vorticity free-troposphere O3 scaling"
+#    echo "// options are" $text                                    >> $Cfile
+#    echo "Module ${ModPvO3};"                                      >> $Cfile
+#    echo                                                           >> $Cfile
+# fi
 
  text="aero6"
  echo "// options are" $text                                       >> $Cfile
@@ -684,18 +684,18 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "Module ${ModPa};"                                           >> $Cfile
  echo                                                              >> $Cfile
 
- text="// compile for integrated source apportionment method"
- echo $text                                                        >> $Cfile
- echo "Module ${ModISAM};"                                         >> $Cfile
- echo                                                              >> $Cfile
+# text="// compile for integrated source apportionment method"
+# echo $text                                                        >> $Cfile
+# echo "Module ${ModISAM};"                                         >> $Cfile
+# echo                                                              >> $Cfile
 
- if [ DDM3D_CCTM ]
- then
-   text="// compile for decoupled direct method in 3d"
-   echo $text                                                        >> $Cfile
-   echo "Module ${ModDDM3D};"                                        >> $Cfile
-   echo                                                              >> $Cfile
- fi
+# if [ DDM3D_CCTM ]
+# then
+#   text="// compile for decoupled direct method in 3d"
+#   echo $text                                                        >> $Cfile
+#   echo "Module ${ModDDM3D};"                                        >> $Cfile
+#   echo                                                              >> $Cfile
+# fi
 
  text="util"
  echo "// options are" $text                                       >> $Cfile
@@ -777,15 +777,15 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
     bld_flags="${bld_flags} -debug_cctm"
  fi
 
- if [ ISAM_CCTM ]
- then
-    bld_flags="${bld_flags} -isam_cctm"
- fi
+# if [ ISAM_CCTM ]
+# then
+#    bld_flags="${bld_flags} -isam_cctm"
+# fi
 
- if [ build_twoway ]
- then
-   bld_flags="${bld_flags} -twoway"
- fi
+# if [ build_twoway ]
+# then
+#   bld_flags="${bld_flags} -twoway"
+# fi
 
    echo "START Blder ___***____ $Blder $bld_flags $Cfile"
 #> Run BLDMAKE with source code in build directory
