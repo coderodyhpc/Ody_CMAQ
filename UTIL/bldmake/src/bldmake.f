@@ -222,9 +222,8 @@
         End If
 
         Call help_msg( 'Invalid arguments [' // Trim(argv) // '] on command line' )
-        write (*,*) "GITLOCAL ",gitlocal,twoway
       End Do
-
+      write (*,*) "@@@AT CONFIG ",git_local,twoway
 ! If REPOROOT is defined, use it, Else set to current directory
       Call GETENV( 'REPOROOT', reporoot )
       If ( Len_Trim( reporoot ) .Eq. 0 ) Then
