@@ -70,22 +70,22 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 
 #> Working directory and Version IDs
  echo "ISAM $ISAM_CCTM $DDM3D_CCTM" 
- if [ "$ISAM_CCTM" == "True" ]; then
-     echo "ISAM"
-     VRSN=v54_ISAM              #> model configuration ID for CMAQ_ISAM
- elif [ "$DDM3D_CCTM" == "True" ]; then
-     echo "DDM3D"
-     VRSN=v54_DDM3D             #> model configuration ID for CMAQ_DDM
- else
+# if [ "$ISAM_CCTM" == "True" ]; then
+#     echo "ISAM"
+#     VRSN=v54_ISAM              #> model configuration ID for CMAQ_ISAM
+# elif [ "$DDM3D_CCTM" == "True" ]; then
+#     echo "DDM3D"
+#     VRSN=v54_DDM3D             #> model configuration ID for CMAQ_DDM
+# else
      VRSN = v54                 #> model configuration ID for CMAQ
- fi
+# fi
 
  EXEC=CCTM_${VRSN}.exe          #> executable name
  CFG=CCTM_${VRSN}.cfg          #> configuration file name
  echo "EXEC equals $EXEC $CFG"
- if [ $build_twoway == "True" ]; then            # WRF Version used for WRF-CMAQ Model (must be v4.4+)
-    WRF_VRSN=v4.4
- fi
+# if [ $build_twoway == "True" ]; then            # WRF Version used for WRF-CMAQ Model (must be v4.4+)
+#    WRF_VRSN=v4.4
+# fi
 
 #========================================================================
 #> CCTM Science Modules
