@@ -222,7 +222,7 @@
         End If
 
         Call help_msg( 'Invalid arguments [' // Trim(argv) // '] on command line' )
-
+        write (*,*) "GITLOCAL ",gitlocal,twoway
       End Do
 
 ! If REPOROOT is defined, use it, Else set to current directory
