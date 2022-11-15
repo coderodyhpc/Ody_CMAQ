@@ -149,7 +149,9 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
  ModISAM=isam                       #> CCTM Integrated Source Apportionment Method
  ModDDM3D=ddm3d                      #> Decoupled Direct Method in 3D
  ModDegrade=reactive_tracers          #> Linear Chemical Loss for a fixed set of species treated as reactive tracers
-
+ echo " "
+ echo "End SCIENCE MODULE"
+ echo " "
 #============================================================================================
 #> Computing System Configuration:
 #>    Most of these settings are done in config.cmaq
@@ -176,6 +178,10 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
  CPP_FLAGS=""                       #> Fortran preprocessor flags
  C_FLAGS="${myCFLAGS} -DFLDMN -I" #> C flags
  LINK_FLAGS="${myLINK_FLAG}"         # Link flags
+
+ echo "$C_FLAGS"
+ echo "End COMPUTING SYSTEM CONF"
+ echo " "
 
 #============================================================================================
 #> Implement User Input
@@ -293,6 +299,7 @@ echo "End Multiprocessing"
  else
     SENS=""
  fi
+echo "SENS $SENS"
 
 #> Build Mechanism Files and instruct build-make to look
 #> in the CHEMMECH output folder for the files
@@ -334,12 +341,12 @@ echo "End Multiprocessing"
  ModTrac=MECHS/$Tracer
 
 #> free trop. O3 potential vorticity scaling
- if [ potvortO3 ]
- then
-    POT=( -Dpotvorto3 )
- else
+# if [ potvortO3 ]
+# then
+#    POT=( -Dpotvorto3 )
+# else
     POT=""
- fi
+# fi
     echo " POT $POT "
 
 #> Set and create the "BLD" directory for checking out and compiling
@@ -356,7 +363,7 @@ echo "End Multiprocessing"
     fi
  fi
  cd $Bld
-    echo " Bld $Bld "
+    echo " BLDBLDBLDBLDBLD $Bld "
 
 #> Set locations for the include files of various modules
  ICL_PAR=$GlobInc/fixed/mpi
@@ -443,7 +450,9 @@ echo "End Multiprocessing"
  fi
 
  echo " Before Config File "
-
+ echo "___________________________________________________________________"
+ echo "___________________________________________________________________"
+ echo "___________________________________________________________________"
 # ============================================================================
 #> Create Config File
 # ============================================================================
