@@ -70,10 +70,10 @@ ParOpt=true             #> uncomment to build a multiple processor (MPI) executa
 
 #> Working directory and Version IDs
  echo "ISAM $ISAM_CCTM $DDM3D_CCTM" 
- if [ $ISAM_CCTM == "True" ]; then
+ if [ "$ISAM_CCTM" == "True" ]; then
      echo "ISAM"
      VRSN=v54_ISAM              #> model configuration ID for CMAQ_ISAM
- elif [ $DDM3D_CCTM == "True" ]; then
+ elif [ "$DDM3D_CCTM" == "True" ]; then
      echo "DDM3D"
      VRSN=v54_DDM3D             #> model configuration ID for CMAQ_DDM
  else
