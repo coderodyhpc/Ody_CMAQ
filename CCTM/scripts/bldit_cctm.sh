@@ -1,7 +1,7 @@
 #!/bin/bash
 #> Set Compiler Identity by User Input: Options -> intel | pgi | gcc
  export compiler=gcc
- export Vrsn=12.2
+ export Vrsn=12.1
  echo "Compiler is set to $compiler"
 
 #> Source the config.cmaq file to set the build environment
