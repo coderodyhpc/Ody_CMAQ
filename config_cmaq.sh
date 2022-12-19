@@ -14,7 +14,7 @@
 
 #> Set the compiler option
  export compiler=gcc
- export Vrsn=12.1
+ export Vrsn=12.2
  echo "Compiler is set to $compiler"
 
 
