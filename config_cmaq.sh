@@ -56,10 +56,10 @@
         #> I/O API, netCDF, and MPI library locations
         export IOAPI_INCL_DIR=/opt/praetorium/ioapi-3.2/Linux2_x86_64gfort12   #> I/O API include header files
         export IOAPI_LIB_DIR=/opt/praetorium/ioapi-3.2/Linux2_x86_64gfort12   #> I/O API libraries
-        export NETCDF_LIB_DIR=/opt/praetorium/netcdf/lib                     #> netCDF C directory path
-        export NETCDF_INCL_DIR=/opt/praetorium/netcdf/include                 #> netCDF C directory path
-        export NETCDFF_LIB_DIR=/opt/praetorium/netcdf/lib                     #> netCDF Fortran directory path
-        export NETCDFF_INCL_DIR=/opt/praetorium/netcdf/include                 #> netCDF Fortran directory path
+        export NETCDF_LIB_DIR=/opt/aula/netcdf/lib                     #> netCDF C directory path
+        export NETCDF_INCL_DIR=/opt/aula/netcdf/include                 #> netCDF C directory path
+        export NETCDFF_LIB_DIR=/opt/aula/netcdf/lib                     #> netCDF Fortran directory path
+        export NETCDFF_INCL_DIR=/opt/aula/netcdf/include                 #> netCDF Fortran directory path
         export MPI_LIB_DIR=/opt/praetorium/openmpi/lib                    #> MPI directory path
 
         echo "MPI $MPI_LIB_DIR "
@@ -70,8 +70,8 @@
         export myCC=/opt/praetorium/openmpi/bin/mpicc
         export myFSTD=""
         export myDBG="-Wall -O0 -g -fcheck=all -ffpe-trap=invalid,zero,overflow -fbacktrace"
-        export myFFLAGS="-ffixed-form -ffixed-line-length-132 -finit-character=32 -O3 -march=icelake-server -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
-        export myFRFLAGS="-ffree-form -ffree-line-length-none -finit-character=32 -O3 -march=icelake-server -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
+        export myFFLAGS="-ffixed-form -ffixed-line-length-132 -finit-character=32 -O3 -march=znver3 -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
+        export myFRFLAGS="-ffree-form -ffree-line-length-none -finit-character=32 -O3 -march=znver3 -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
         export myCFLAGS="-O2"
 #        export myLINK_FLAG= # "-fopenmp" openMP not supported w/ CMAQ
         export extra_lib=""
