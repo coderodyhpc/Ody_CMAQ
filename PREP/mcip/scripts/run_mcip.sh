@@ -38,7 +38,7 @@ source $CMAQ_HOME/config_cmaq.csh
 
 APPL=160702
 CoordName=LamCon_40N_97W    # 16-character maximum
-GridName=2016_12SE1        # 16-character maximum
+GridName=2022_DC        # 16-character maximum
 
 DataPath=$CMAQ_DATA
 InMetDir=$DataPath/wrf
@@ -47,9 +47,7 @@ OutDir=$DataPath/mcip/$GridName
 ProgDir=$CMAQ_HOME/PREP/mcip/src
 WorkDir=$OutDir
 
-InMetFiles=($InMetDir/subset_wrfout_d01_2016-07-01_00:00:00 \
-                $InMetDir/subset_wrfout_d01_2016-07-02_00:00:00 \
-                $InMetDir/subset_wrfout_d01_2016-07-03_00:00:00 )
+InMetFiles=($InMetDir/wrfout_d01_2022-01-01_00:00:00)
 
 IfGeo="F"
 InGeoFile=$InGeoDir/geo_em_d01.nc
@@ -58,8 +56,8 @@ LPV=0
 LWOUT=0
 LUVBOUT=1
 
-MCIP_START=2016-07-02-00:00:00.0000  # [UTC]
-MCIP_END=2016-07-03-00:00:00.0000  # [UTC]
+MCIP_START=2022-01-01-00:00:00.0000  # [UTC]
+MCIP_END=2022-01-01-00:00:00.0000  # [UTC]
 
 INTVL=60 # [min]
 
@@ -79,7 +77,7 @@ IOFORM=1
 #     information in X0, Y0, NCOLS, and NROWS.
 #-----------------------------------------------------------------------
 
-set BTRIM = 0
+BTRIM=0
 
 #-----------------------------------------------------------------------
 # Define MCIP subset domain.  (Only used if BTRIM = -1.  Otherwise,
