@@ -46,15 +46,14 @@ MODEL = mcip.exe
 #LIBS    = -L$(IOAPI_ROOT)/Linux2_x86_64 -lioapi  \
 #          -L$(NETCDF)/lib -lnetcdff -lnetcdf
 
-#...Intel Fortran
-FC      = ifort
-NETCDF = /usr/local/apps/netcdf-4.7.3/intel-19.0
-IOAPI_ROOT = /usr/local/apps/ioapi-3.2_20181011/intel-19.0
+FC      = /opt/atrium/openmpi/bin/mpifort
+NETCDF = /opt/atrium/netcdf
+IOAPI_ROOT = /opt/atrium/ioapi-3.2
 ###FFLAGS  = -g -O0 -check all -C -traceback -FR -I$(NETCDF)/include  \
 ###          -I$(IOAPI_ROOT)/Linux2_x86_64ifort
-FFLAGS  = -O3 -traceback -FR -I$(NETCDF)/include -I$(IOAPI_ROOT)/Linux2_x86_64ifort
-LIBS    = -L$(IOAPI_ROOT)/lib -lioapi \
-          -L$(NETCDF)/lib -lnetcdff -lnetcdf
+FFLAGS  = -O3 -march=native -I$(NETCDF)/include -I$(IOAPI_ROOT)/Linux2_aarch64gfort11
+LIBS    = -L$(IOAPI_ROOT)/Linux2_aarch64gfort11 -lioapi \
+          -L$(NETCDF)/lib -lnetcdff -L$(NETCDF)/lib -lnetcdf
 
 DEFS   = 
 
