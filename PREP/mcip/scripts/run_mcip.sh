@@ -1,67 +1,38 @@
 #!/bin/bash
 
-#------------------------------------------------------------------------------#
-#  The Community Multiscale Air Quality (CMAQ) system software is in           #
-#  continuous development by various groups and is based on information        #
-#  from these groups: Federal Government employees, contractors working        #
-#  within a United States Government contract, and non-Federal sources         #
-#  including research institutions.  These groups give the Government          #
-#  permission to use, prepare derivative works of, and distribute copies       #
-#  of their work in the CMAQ system to the public and to permit others         #
-#  to do so.  The United States Environmental Protection Agency                #
-#  therefore grants similar permission to use the CMAQ system software,        #
-#  but users are requested to provide copies of derivative works or            #
-#  products designed to operate in the CMAQ system to the United States        #
-#  Government without restrictions as to use by others.  Software              #
-#  that is used with the CMAQ system but distributed under the GNU             #
-#  General Public License or the GNU Lesser General Public License is          #
-#  subject to their copyright restrictions.                                    #
-#------------------------------------------------------------------------------#
+# Definition of main subdirectories
+ export CMAQ_HOME=/home/ubuntu/CMAQ
+ export CMAQ_REPO=/home/ubuntu/CMAQ
+ export CMAQ_DATA=$CMAQ_HOME/data_custom
 
+# Definition of parameters
+ APPL=example
+ CoordName=coord_example     # 16-character maximum
+ GridName=ex_12k                     # 16-character maximum
 
-#-----------------------------------------------------------------------
-# Set identification for input and output files.
-#
-#   APPL       = Application Name (tag for MCIP output file names)
-#   CoordName  = Coordinate system name for GRIDDESC
-#   GridName   = Grid Name descriptor for GRIDDESC
-#   InMetDir   = Directory that contains input meteorology files
-#   InGeoDir   = Directory that contains input WRF "GEOGRID" file to
-#                provide fractional land-use categories if "LANDUSEF"
-#                was not included in the WRFOUT files.
-#   OutDir     = Directory to write MCIP output files
-#   ProgDir    = Directory that contains the MCIP executable
-#   WorkDir    = Working Directory for Fortran links and namelist
-#-----------------------------------------------------------------------
+# Definition of subdirectories holding the data
+ DataPath=/home/ubuntu/WRF-4.4/test/em_real
+ InMetDir=$DataPath
+ InGeoDir=/home/ubuntu/PREPRO/WPS
+ OutDir=$CMAQ_DATA/$APPL
+ ProgDir=$CMAQ_HOME/PREP/mcip/src
+ WorkDir=$DataPath/mcip/$GridName
 
-source $CMAQ_HOME/config_cmaq.csh
+ InMetFiles="/home/ubuntu/WRF-4.4/test/em_real/wrfout_d01_2022-12-29_18_00_00"
 
-APPL=160702
-CoordName=LamCon_40N_97W    # 16-character maximum
-GridName=2022_DC        # 16-character maximum
+ IfGeo="T"
+ InGeoFile=$InGeoDir/geo_em.d01.nc
 
-DataPath=$CMAQ_DATA
-InMetDir=$DataPath/wrf
-InGeoDir=$DataPath/wrf
-OutDir=$DataPath/mcip/$GridName
-ProgDir=$CMAQ_HOME/PREP/mcip/src
-WorkDir=$OutDir
+ LPV=0
+ LWOUT=0
+ LUVBOUT=1
 
-InMetFiles=($InMetDir/wrfout_d01_2022-01-01_00:00:00)
+ MCIP_START=2022-12-30-00:00:00.0000  # [UTC]
+ MCIP_END=2022-12-31-00:00:00.0000  # [UTC]
 
-IfGeo="F"
-InGeoFile=$InGeoDir/geo_em_d01.nc
+ INTVL=45 # [min]
 
-LPV=0
-LWOUT=0
-LUVBOUT=1
-
-MCIP_START=2022-01-01-00:00:00.0000  # [UTC]
-MCIP_END=2022-01-01-00:00:00.0000  # [UTC]
-
-INTVL=60 # [min]
-
-IOFORM=1
+ IOFORM=1
 
 #-----------------------------------------------------------------------
 # Set number of meteorology "boundary" points to remove on each of four
@@ -77,7 +48,7 @@ IOFORM=1
 #     information in X0, Y0, NCOLS, and NROWS.
 #-----------------------------------------------------------------------
 
-BTRIM=0
+ BTRIM=2
 
 #-----------------------------------------------------------------------
 # Define MCIP subset domain.  (Only used if BTRIM = -1.  Otherwise,
@@ -95,15 +66,15 @@ BTRIM=0
 #           lateral boundaries).
 #-----------------------------------------------------------------------
 
-X0=13
-Y0=94
-NCOLS=89
-NROWS=104
+ X0=13
+ Y0=94
+ NCOLS=89
+ NROWS=104
 
-LPRT_COL=0
-LPRT_ROW=0
+ LPRT_COL=0
+ LPRT_ROW=0
 
-WRF_LC_REF_LAT=40.0
+ WRF_LC_REF_LAT=40.0
 
 #=======================================================================
 #=======================================================================
@@ -112,92 +83,77 @@ WRF_LC_REF_LAT=40.0
 #=======================================================================
 #=======================================================================
 
-PROG=mcip
+ PROG=mcip
 
-date
+#date
 
 #-----------------------------------------------------------------------
-# Make sure the input files exist.
+# Create the output directory.
 #-----------------------------------------------------------------------
 
-#if ( $IfGeo == "T" ) then
-#  if ( ! -f $InGeoFile ) then
-#    echo "No such input file $InGeoFile"
-#    exit 1
-#  endif
-#endif
-
-#foreach fil ( $InMetFiles )
-#  if ( ! -f $fil ) then
-#    echo "No such input file $fil"
-#    exit 1
-#  endif
-#end
+ if [ ! -d $OutDir ]
+ then
+   mkdir -p $OutDir
+ fi
 
 
 #-----------------------------------------------------------------------
 # Create a work directory for this job.
 #-----------------------------------------------------------------------
 
-#if ( ! -d $WorkDir ) then
-#  mkdir -p $WorkDir
-#  if ( $status != 0 ) then
-#    echo "Failed to make work directory, $WorkDir"
-#    exit 1
-#  endif
-#endif
+ if [ ! -d $WorkDir ]
+ then
+   mkdir -p $WorkDir
+ fi
 
-cd $WorkDir
+ cd $WorkDir
 
 #-----------------------------------------------------------------------
 # Set up script variables for input files.
 #-----------------------------------------------------------------------
 
-#if ( $IfGeo == "T" ) then
-#  if ( -f $InGeoFile ) then
-#    set InGeo = $InGeoFile
-#  else
-#    set InGeo = "no_file"
-#  endif
-#else
-#  set InGeo = "no_file"
-#endif
-
-FILE_GD=$OutDir/GRIDDESC
+ FILE_GD=$OutDir/GRIDDESC
 
 #-----------------------------------------------------------------------
 # Create namelist with user definitions.
 #-----------------------------------------------------------------------
 
-Marker="&END"
+ Marker="&END"
 
-cat > $WorkDir/namelist.${PROG} << !
- &FILENAMES
-  file_gd    = "$FILE_GD"
-  file_mm    = "$InMetFiles[1]",
+ cat > $WorkDir/namelist.${PROG} << !
+  &FILENAMES
+   file_gd    = "$FILE_GD"
+   file_mm    = "$InMetFiles",
 !
 
-if [ $#InMetFiles > 1 ]
-then
-  @ nn = 2
-  while [ $nn <= $#InMetFiles ]
-    cat >> $WorkDir/namelist.${PROG} << !
-               "$InMetFiles[$nn]",
-!
-    @ nn ++
-  end
-fi
 
+#if [ $#InMetFiles > 1 ]
+#then
+#  @ nn = 2
+#  while [ $nn <= $#InMetFiles ]
+#    cat >> $WorkDir/namelist.${PROG} << !
+#               "$InMetFiles[$nn]",
+#!
+#    @ nn ++
+#  end
+#fi
+
+cat >> $WorkDir/namelist.${PROG} << !
+               "$InMetFiles",
+!
+
+echo  $WorkDir $IfGeo $InGeoFile
 if [ $IfGeo == "T" ]
 then
 cat >> $WorkDir/namelist.${PROG} << !
-  file_geo   = "$InGeo"
+   file_geo   = "$InGeoFile"
 !
 fi
 
 cat >> $WorkDir/namelist.${PROG} << !
   ioform     =  $IOFORM
  $Marker
+
  &USERDEFS
   lpv        =  $LPV
   lwout      =  $LWOUT
@@ -212,30 +168,32 @@ cat >> $WorkDir/namelist.${PROG} << !
   lprt_row   =  $LPRT_ROW
   wrf_lc_ref_lat = $WRF_LC_REF_LAT
  $Marker
- &WINDOWDEFS
-  x0         =  $X0
-  y0         =  $Y0
-  ncolsin    =  $NCOLS
-  nrowsin    =  $NROWS
- $Marker
 !
-
 #-----------------------------------------------------------------------
 # Set links to FORTRAN units.
 #-----------------------------------------------------------------------
 
-rm fort.*
-if [ -f $FILE_GD ] rm -f $FILE_GD
+#rm fort.*
+#if [ -f $FILE_GD ] rm -f $FILE_GD
 
-ln -s $FILE_GD                   fort.4
-ln -s $WorkDir/namelist.${PROG}  fort.8
+#ln -s $FILE_GD                   fort.4
+#ln -s $WorkDir/namelist.${PROG}  fort.8
 
-NUMFIL = 0
-foreach fil ( $InMetFiles )
-  @ NN = $NUMFIL + 10
-  ln -s $fil fort.$NN
-  @ NUMFIL ++
-end
+#NUMFIL = 0
+#foreach fil ( $InMetFiles )
+#  @ NN = $NUMFIL + 10
+#  ln -s $fil fort.$NN
+#  @ NUMFIL ++
+#end
+
+#if [ $status == 0 ]
+#then
+#  rm fort.*
+#  exit 0
+#else
+#  echo "Error running $PROG"
+#  exit 1
+#fi
 
 #-----------------------------------------------------------------------
 # Set output file names and other miscellaneous environment variables.
@@ -255,31 +213,47 @@ export LUFRAC_CRO=$OutDir/LUFRAC_CRO_${APPL}.nc
 export SOI_CRO=$OutDir/SOI_CRO_${APPL}.nc
 export MOSAIC_CRO=$OutDir/MOSAIC_CRO_${APPL}.nc
 
-if [ -f $GRID_BDY_2D ] rm -f $GRID_BDY_2D
-if [ -f $GRID_CRO_2D ] rm -f $GRID_CRO_2D
-if [ -f $GRID_DOT_2D ] rm -f $GRID_DOT_2D
-if [ -f $MET_BDY_3D  ] rm -f $MET_BDY_3D
-if [ -f $MET_CRO_2D  ] rm -f $MET_CRO_2D
-if [ -f $MET_CRO_3D  ] rm -f $MET_CRO_3D
-if [ -f $MET_DOT_3D  ] rm -f $MET_DOT_3D
-if [ -f $LUFRAC_CRO  ] rm -f $LUFRAC_CRO
-if [ -f $SOI_CRO     ] rm -f $SOI_CRO
-if [ -f $MOSAIC_CRO  ] rm -f $MOSAIC_CRO
+if [ -f "$GRID_BDY_2D" ]; then
+        rm -f $GRID_BDY_2D
+fi
+if [ -f "$GRID_CRO_2D" ]; then
+        rm -f $GRID_CRO_2D
+fi
+if [ -f "$GRID_DOT_2D" ]; then
+        rm -f $GRID_DOT_2D
+fi
+if [ -f "$MET_BDY_3D"  ]; then
+        rm -f $MET_BDY_3D
+fi
+if [ -f "$MET_CRO_2D"  ]; then
+        rm -f $MET_CRO_2D
+fi
+if [ -f "$MET_CRO_3D"  ]; then
+        rm -f $MET_CRO_3D
+fi
+if [ -f "$MET_DOT_3D"  ]; then
+        rm -f $MET_DOT_3D
+fi
+if [ -f "$LUFRAC_CRO"  ]; then
+        rm -f $LUFRAC_CRO
+fi
+if [ -f "$SOI_CRO"     ]; then
+        rm -f $SOI_CRO
+fi
+if [ -f "$MOSAIC_CRO"  ]; then
+        rm -f $MOSAIC_CRO
+fi
 
-if [ -f $OutDir/mcip.nc      ] rm -f $OutDir/mcip.nc
-if [ -f $OutDir/mcip_bdy.nc  ] rm -f $OutDir/mcip_bdy.nc
-
+if [ -f "$OutDir/mcip.nc" ]; then
+        rm -f $OutDir/mcip.nc
+fi
+if [ -f "$OutDir/mcip_bdy.nc" ]; then
+        rm -f $OutDir/mcip_bdy.nc
+fi
 #-----------------------------------------------------------------------
 # Execute MCIP.
 #-----------------------------------------------------------------------
-
+echo "EXECUTING MCIP"
 $ProgDir/${PROG}.exe
 
-if [ $status == 0 ]
-then
-  rm fort.*
-  exit 0
-else
-  echo "Error running $PROG"
-  exit 1
-fi
+
