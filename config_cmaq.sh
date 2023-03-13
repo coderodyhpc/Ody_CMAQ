@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #> Critical Folder Locations
- export CMAQ_HOME=/home/ubuntu/CMAQv54
- export CMAQ_REPO=/home/ubuntu/CMAQv54
+ export CMAQ_HOME=/home/ubuntu/CMAQ
+ export CMAQ_REPO=/home/ubuntu/CMAQ
  export CMAQ_DATA=$CMAQ_HOME/data
  [ ! -d $CMAQ_DATA ] && mkdir -p $CMAQ_DATA
 
@@ -14,7 +14,7 @@
 
 #> Set the compiler option
  export compiler=gcc
- export Vrsn=12.2
+ export Vrsn=11.3
  echo "Compiler is set to $compiler"
 
 
@@ -54,12 +54,12 @@
 
         export WRF_ARCH=34
         #> I/O API, netCDF, and MPI library locations
-        export IOAPI_INCL_DIR=/opt/casa/ioapi-3.2/Linux2_aarch64gfort12   #> I/O API include header files
-        export IOAPI_LIB_DIR=/opt/casa/ioapi-3.2/Linux2_aarch64gfort12   #> I/O API libraries
-        export NETCDF_LIB_DIR=/opt/casa/netcdf/lib                     #> netCDF C directory path
-        export NETCDF_INCL_DIR=/opt/casa/netcdf/include                 #> netCDF C directory path
-        export NETCDFF_LIB_DIR=/opt/casa/netcdf/lib                     #> netCDF Fortran directory path
-        export NETCDFF_INCL_DIR=/opt/casa/netcdf/include                 #> netCDF Fortran directory path
+        export IOAPI_INCL_DIR=/opt/atrium/ioapi-3.2/Linux2_aarch64gfort11   #> I/O API include header files
+        export IOAPI_LIB_DIR=/opt/atrium/ioapi-3.2/Linux2_aarch64gfort11   #> I/O API libraries
+        export NETCDF_LIB_DIR=/opt/atrium/netcdf/lib                     #> netCDF C directory path
+        export NETCDF_INCL_DIR=/opt/atrium/netcdf/include                 #> netCDF C directory path
+        export NETCDFF_LIB_DIR=/opt/atrium/netcdf/lib                     #> netCDF Fortran directory path
+        export NETCDFF_INCL_DIR=/opt/atrium/netcdf/include                 #> netCDF Fortran directory path
         export MPI_LIB_DIR=/opt/atrium/openmpi/lib                    #> MPI directory path
 
         echo "MPI $MPI_LIB_DIR "
