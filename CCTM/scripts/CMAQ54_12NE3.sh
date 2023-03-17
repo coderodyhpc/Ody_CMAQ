@@ -18,7 +18,7 @@
 
 #> Choose compiler
  export compiler=gcc
- export Vrsn=12.2
+ export Vrsn=11.3
  export compilerString=${compiler}${compilerVrsn}
 
 #> Set General Parameters for Configuring the Simulation
