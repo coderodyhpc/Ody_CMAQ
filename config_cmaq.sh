@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #> Critical Folder Locations
- export CMAQ_HOME=/home/ubuntu/CMAQv54
- export CMAQ_REPO=/home/ubuntu/CMAQv54
+ export CMAQ_HOME=/home/ubuntu/CMAQ
+ export CMAQ_REPO=/home/ubuntu/CMAQ
  export CMAQ_DATA=$CMAQ_HOME/data
  [ ! -d $CMAQ_DATA ] && mkdir -p $CMAQ_DATA
 
@@ -70,8 +70,8 @@
         export myCC=/opt/atrium/openmpi/bin/mpicc
         export myFSTD=""
         export myDBG="-Wall -O0 -g -fcheck=all -ffpe-trap=invalid,zero,overflow -fbacktrace"
-        export myFFLAGS="-ffixed-form -ffixed-line-length-132 -finit-character=32 -O3 -march=armv8.4-a+crypto+fp16+rcpc+dotprod -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
-        export myFRFLAGS="-ffree-form -ffree-line-length-none -finit-character=32 -O3 -march=armv8.4-a+crypto+fp16+rcpc+dotprod -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
+        export myFFLAGS="-ffixed-form -ffixed-line-length-132 -finit-character=32 -O3 -march=armv8.2-a+crypto+fp16+rcpc+dotprod -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
+        export myFRFLAGS="-ffree-form -ffree-line-length-none -finit-character=32 -O3 -march=armv8.2-a+crypto+fp16+rcpc+dotprod -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
         export myCFLAGS="-O2"
 #        export myLINK_FLAG= # "-fopenmp" openMP not supported w/ CMAQ
         export extra_lib=""
