@@ -10,7 +10,7 @@
 # ===================================================================
 
  echo 'Start Model Run At ' `date`
- export CMAQ_HOME=/home/ubuntu/CMAQ
+ export CMAQ_HOME=/home/ubuntu/CMAQv5.4
  export CMAQ_DATA=$CMAQ_HOME/dat3
 
 #> Toggle Diagnostic Mode which will print verbose information to standard output
@@ -18,7 +18,7 @@
 
 #> Choose compiler
  export compiler=gcc
- export Vrsn=12.2
+ export Vrsn=11.3
  export compilerString=${compiler}${compilerVrsn}
 
 #> Set General Parameters for Configuring the Simulation
