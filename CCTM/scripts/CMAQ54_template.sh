@@ -10,7 +10,7 @@
 # ===================================================================
 
  echo 'Start Model Run At ' `date`
- export CMAQ_HOME=/home/ubuntu/CMAQ
+ export CMAQ_HOME=/home/ubuntu/CMAQv5.4
  export CMAQ_DATA=$CMAQ_HOME/data_custom
 
 #> Toggle Diagnostic Mode which will print verbose information to standard output
