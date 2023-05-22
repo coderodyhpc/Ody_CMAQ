@@ -62,7 +62,7 @@ DDM3D_CCTM=true          #> uncomment to compile CCTM with DD3D activated
 #     echo "Wrong place $ISAM_CCTM"
 # elif [ $DDM3D_CCTM==true ] 
 # then
-     VRSN=v533_DDM3D             #> model configuration ID for CMAQ_DDM
+     VRSN=v54_DDM3D             #> model configuration ID for CMAQ_DDM
 # else
 #     VRSN=v532                   #> model configuration ID for CMAQ
 # fi
