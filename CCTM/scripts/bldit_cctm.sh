@@ -85,27 +85,29 @@ DDM3D_CCTM=true          #> uncomment to compile CCTM with DD3D activated
 
  ModGrid=grid/cartesian             #> grid configuration module 
  
+ ModGrid=grid/cartesian            #> grid configuration module
+
  DepMod=m3dry                      #> m3dry or stage
 # DepMod=stage
  ModAdv=wrf_cons                   #> 3-D Advection Scheme [Options: wrf_cons (default), local_cons]
- ModHdiff=hdiff/multiscale           #> horizontal diffusion module
- ModVdiff=vdiff/acm2_${DepMod}       #> vertical diffusion module (see $CMAQ_MODEL/CCTM/src/vdiff)
- ModDepv=depv/${DepMod}             #> deposition velocity calculation module 
+ ModHdiff=hdiff/multiscale         #> horizontal diffusion module
+ ModVdiff=vdiff/acm2_${DepMod}     #> vertical diffusion module (see $CMAQ_MODEL/CCTM/src/vdiff)
+ ModDepv=depv/${DepMod}            #> deposition velocity calculation module
                                             #>     (see $CMAQ_MODEL/CCTM/src/depv)
- ModEmis=emis/emis                  #> in-line emissions module
- ModBiog=biog/beis3                 #> BEIS3 in-line emissions module 
- ModPlmrs=plrise/smoke               #> in-line emissions plume rise
- ModCgrds=spcs/cgrid_spcs_nml        #> chemistry species configuration module 
-                                            #>     (see $CMAQ_MODEL/CCTM/src/spcs)
- ModPhot=phot/inline                #> photolysis calculation module 
-                                            #>     (see $CMAQ_MODEL/CCTM/src/phot)
- Mechanism=cb6r3_ae7_aq               #> chemical mechanism (see $CMAQ_MODEL/CCTM/src/MECHS)
- ModGas=gas/ebi_${Mechanism}       #> gas-phase chemistry solver (see $CMAQ_MODEL/CCTM/src/gas)
-                                            #> use gas/ros3 or gas/smvgear for a solver independent 
-                                            #  of the photochemical mechanism
- ModAero=aero/aero7                 #> aerosol chemistry module (see $CMAQ_MODEL/CCTM/src/aero)
- ModCloud=cloud/acm_ae7              #> cloud chemistry module (see $CMAQ_MODEL/CCTM/src/cloud)
-                                            #>   overwritten below if using cb6r3m_ae7_kmtbr mechanism
+ ModEmis=emis/emis                 #> in-line emissions module
+ ModBiog=biog/beis4                #> BEIS3 in-line emissions module
+ ModMegBiog=biog/megan3            #> MEGAN3 in-line emissions module
+ ModPlmrs=plrise/smoke             #> in-line emissions plume rise
+ ModCgrds=spcs/cgrid_spcs_nml      #> chemistry species configuration module
+                                   #>     (see $CMAQ_MODEL/CCTM/src/spcs)
+ ModPhot=phot/inline               #> photolysis calculation module
+                                   #>     (see $CMAQ_MODEL/CCTM/src/phot)
+ Mechanism=cb6r5_ae7_aq            #> chemical mechanism (see $CMAQ_MODEL/CCTM/src/MECHS)
+ ModMech=MECHS/${Mechanism}
+# if [ ${Mechanism} =~ *ae7* ]; then       #> ae7 family of aero and cloud chem
+ ModAero=aero/aero7                   # > aerosol chemistry module (see $CMAQ_MODEL/CCTM/src/aero)
+ ModCloud=cloud/acm_ae7               # > cloud chemistry module (see $CMAQ_MODEL/CCTM/src/cloud)
+ 
  ModUtil=util/util                  #> CCTM utility modules
  ModDiag=diag                       #> CCTM diagnostic modules
  Tracer=trac0                      #> tracer configuration directory under 
