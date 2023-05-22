@@ -13,7 +13,7 @@
  
 #> Source the config.cmaq file to set the build environment
  cd ../..
- source ./config_ddm3d.sh
+ source ./config_isam.sh
 
 # =======================================================================
 #> Begin User Input Section
@@ -41,10 +41,10 @@ CompileBLDMAKE=true      #> Recompile the BLDMAKE utility from source
                          #>   comment out if no additional options are wanted.
 
 #> Integrated Source Apportionment Method (ISAM)
-#set ISAM_CCTM=true      #> uncomment to compile CCTM with ISAM activated
-                         #>   comment out to use standard process
+ISAM_CCTM=true      #> uncomment to compile CCTM with ISAM activated
+                    #>   comment out to use standard process
 
-DDM3D_CCTM=true          #> uncomment to compile CCTM with DD3D activated
+#set DDM3D_CCTM=true     #> uncomment to compile CCTM with DD3D activated
                          #>   comment out to use standard process
                          #> Two-way WRF-CMAQ 
 #set build_twoway=true   #> uncomment to build WRF-CMAQ twoway; 
@@ -53,16 +53,16 @@ DDM3D_CCTM=true          #> uncomment to compile CCTM with DD3D activated
 #> Potential vorticity free-troposphere O3 scaling
 #set potvortO3=true
 
-# echo "ISAM_CCTM is set to $ISAM_CCTM"
- echo "DDM3D_CCTM is set to $DDM3D_CCTM"
+ echo "ISAM_CCTM is set to $ISAM_CCTM"
+# echo "DDM3D_CCTM is set to $DDM3D_CCTM"
 #> Working directory and Version IDs
 # if [ $ISAM_CCTM==true ] 
 # then
-#     VRSN=v532_ISAM             #> model configuration ID for CMAQ_ISAM
+     VRSN=v54_ISAM             #> model configuration ID for CMAQ_ISAM
 #     echo "Wrong place $ISAM_CCTM"
 # elif [ $DDM3D_CCTM==true ] 
 # then
-     VRSN=v533_DDM3D             #> model configuration ID for CMAQ_DDM
+#     VRSN=v532_DDM3D             #> model configuration ID for CMAQ_DDM
 # else
 #     VRSN=v532                   #> model configuration ID for CMAQ
 # fi
@@ -99,7 +99,7 @@ DDM3D_CCTM=true          #> uncomment to compile CCTM with DD3D activated
                                             #>     (see $CMAQ_MODEL/CCTM/src/spcs)
  ModPhot=phot/inline                #> photolysis calculation module 
                                             #>     (see $CMAQ_MODEL/CCTM/src/phot)
- Mechanism=cb6r3_ae7_aq               #> chemical mechanism (see $CMAQ_MODEL/CCTM/src/MECHS)
+ Mechanism=cb6r5_ae7_aq               #> chemical mechanism (see $CMAQ_MODEL/CCTM/src/MECHS)
  ModGas=gas/ebi_${Mechanism}       #> gas-phase chemistry solver (see $CMAQ_MODEL/CCTM/src/gas)
                                             #> use gas/ros3 or gas/smvgear for a solver independent 
                                             #  of the photochemical mechanism
@@ -577,14 +577,6 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "Module ${ModTrac};"                                         >> $Cfile
  echo 
 
-# if [ potvortO3 ]
-# then
-#    text="use potential vorticity free-troposphere O3 scaling"
-#    echo "// options are" $text                                    >> $Cfile
-#    echo "Module ${ModPvO3};"                                      >> $Cfile
-#    echo                                                           >> $Cfile
-# fi
-
  text="aero6"
  echo "// options are" $text                                       >> $Cfile
  echo "Module ${ModAero};"                                         >> $Cfile
@@ -600,18 +592,10 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "Module ${ModPa};"                                           >> $Cfile
  echo                                                              >> $Cfile
 
-# text="// compile for integrated source apportionment method"
-# echo $text                                                        >> $Cfile
-# echo "Module ${ModISAM};"                                         >> $Cfile
-# echo                                                              >> $Cfile
-
- if [ DDM3D_CCTM ]
- then
-   text="// compile for decoupled direct method in 3d"
-   echo $text                                                        >> $Cfile
-   echo "Module ${ModDDM3D};"                                        >> $Cfile
-   echo                                                              >> $Cfile
- fi
+ text="// compile for integrated source apportionment method"
+ echo $text                                                        >> $Cfile
+ echo "Module ${ModISAM};"                                         >> $Cfile
+ echo                                                              >> $Cfile
 
  text="util"
  echo "// options are" $text                                       >> $Cfile
@@ -632,12 +616,6 @@ Cfile=${Bld}/${CFG}.bld      # Config Filename
  echo "// options are" $text                                       >> $Cfile
  echo "Module cio;"                                                >> $Cfile
  echo                                                              >> $Cfile
-
-# if [ ModMisc ]
-# then
-#    echo "Module ${ModMisc};"                                      >> $Cfile
-#    echo                                                           >> $Cfile
-# fi
 
 # ============================================================================
 #> Create Makefile and Model Executable
