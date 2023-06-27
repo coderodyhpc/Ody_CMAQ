@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #> Critical Folder Locations
- export CMAQ_HOME=/home/ubuntu/CMAQ
- export CMAQ_REPO=/home/ubuntu/CMAQ
+ export CMAQ_HOME=/home/ubuntu/CMAQE
+ export CMAQ_REPO=/home/ubuntu/CMAQE
  export CMAQ_DATA=$CMAQ_HOME/data
  [ ! -d $CMAQ_DATA ] && mkdir -p $CMAQ_DATA
 
@@ -14,7 +14,7 @@
 
 #> Set the compiler option
  export compiler=gcc
- export Vrsn=11.3
+ export Vrsn=10.4
  echo "Compiler is set to $compiler"
 
 
@@ -54,20 +54,20 @@
 
         export WRF_ARCH=34
         #> I/O API, netCDF, and MPI library locations
-        export IOAPI_INCL_DIR=/opt/atrium/ioapi-3.2/Linux2_aarch64gfort11   #> I/O API include header files
-        export IOAPI_LIB_DIR=/opt/atrium/ioapi-3.2/Linux2_aarch64gfort11   #> I/O API libraries
-        export NETCDF_LIB_DIR=/opt/atrium/netcdf/lib                     #> netCDF C directory path
-        export NETCDF_INCL_DIR=/opt/atrium/netcdf/include                 #> netCDF C directory path
-        export NETCDFF_LIB_DIR=/opt/atrium/netcdf/lib                     #> netCDF Fortran directory path
-        export NETCDFF_INCL_DIR=/opt/atrium/netcdf/include                 #> netCDF Fortran directory path
-        export MPI_LIB_DIR=/opt/atrium/openmpi/lib                    #> MPI directory path
+        export IOAPI_INCL_DIR=/opt/domus/ioapi-3.2/Linux2_aarch64gfort10   #> I/O API include header files
+        export IOAPI_LIB_DIR=/opt/domus/ioapi-3.2/Linux2_aarch64gfort10   #> I/O API libraries
+        export NETCDF_LIB_DIR=/opt/domus/netcdf/lib                     #> netCDF C directory path
+        export NETCDF_INCL_DIR=/opt/domus/netcdf/include                 #> netCDF C directory path
+        export NETCDFF_LIB_DIR=/opt/domus/netcdf/lib                     #> netCDF Fortran directory path
+        export NETCDFF_INCL_DIR=/opt/domus/netcdf/include                 #> netCDF Fortran directory path
+        export MPI_LIB_DIR=/opt/domus/openmpi/lib                    #> MPI directory path
 
         echo "MPI $MPI_LIB_DIR "
 
         #> Compiler Aliases and Flags
         #> set the compiler flag -fopt-info-missed to generate a missed optimization report in the bldit logfile
-        export myFC=/opt/atrium/openmpi/bin/mpifort
-        export myCC=/opt/atrium/openmpi/bin/mpicc
+        export myFC=/opt/domus/openmpi/bin/mpifort
+        export myCC=/opt/domus/openmpi/bin/mpicc
         export myFSTD=""
         export myDBG="-Wall -O0 -g -fcheck=all -ffpe-trap=invalid,zero,overflow -fbacktrace"
         export myFFLAGS="-ffixed-form -ffixed-line-length-132 -finit-character=32 -O3 -march=armv8.4-a+crypto+fp16+rcpc+dotprod -funroll-loops -ftree-vectorize -ftree-loop-if-convert -fallow-argument-mismatch -fallow-invalid-boz"
