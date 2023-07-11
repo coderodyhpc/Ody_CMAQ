@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #> Critical Folder Locations
- export CMAQ_HOME=/home/ubuntu/CMAQ
- export CMAQ_REPO=/home/ubuntu/CMAQ
+ export CMAQ_HOME=/home/ubuntu/CMAQIII
+ export CMAQ_REPO=/home/ubuntu/CMAQIII
  export CMAQ_DATA=$CMAQ_HOME/data
  [ ! -d $CMAQ_DATA ] && mkdir -p $CMAQ_DATA
 
@@ -13,8 +13,8 @@
 #===============================================================================
 
 #> Set the compiler option
- export compiler=gcc
- export Vrsn=13.1
+ export compiler=nvhpc
+ export Vrsn=23.3
  echo "Compiler is set to $compiler"
 
 
@@ -25,27 +25,24 @@
     nvhpc)
 
         #> I/O API, netCDF, and MPI library locations
-        export IOAPI_INCL_DIR=iopai_inc_pgi     #> I/O API include header files
-        export IOAPI_LIB_DIR=ioapi_lib_pgi      #> I/O API libraries
-        export NETCDF_LIB_DIR=netcdf_lib_pgi    #> netCDF C directory path
-        export NETCDF_INCL_DIR=netcdf_inc_pgi   #> netCDF C directory path
-        export NETCDFF_LIB_DIR=netcdff_lib_pgi  #> netCDF Fortran directory path
-        export NETCDFF_INCL_DIR=netcdff_inc_pgi #> netCDF Fortran directory path
-        export MPI_LIB_DIR=mpi_lib_pgi          #> MPI directory path
+        export IOAPI_INCL_DIR=/opt/compluvium/ioapi-3.2/Linux2_x86_64nvhpc233     #> I/O API include header files
+        export IOAPI_LIB_DIR=/opt/compluvium/ioapi-3.2/Linux2_x86_64nvhpc233      #> I/O API libraries
+        export NETCDF_LIB_DIR=/opt/compluvium/netcdf/lib    #> netCDF C directory path
+        export NETCDF_INCL_DIR=/opt/compluvium/netcdf/include   #> netCDF C directory path
+        export NETCDFF_LIB_DIR=/opt/compluvium/netcdf/lib  #> netCDF Fortran directory path
+        export NETCDFF_INCL_DIR=/opt/compluvium/netcdf/include #> netCDF Fortran directory path
+        export MPI_LIB_DIR=/opt/compluvium/openmpi/lib          #> MPI directory path
 
         #> Compiler Aliases and Flags
-        setenv myFC mpifort
-        setenv myCC pgcc
-        setenv myLINK_FLAG # "-mp" openMP not supported w/ CMAQ
-        setenv myFSTD "-O3"
-        setenv myDBG  "-O0 -g -Mbounds -Mchkptr -traceback -Ktrap=fp"
-        setenv myFFLAGS "-Mfixed -Mextend -mcmodel=medium -tp px"
-        setenv myFRFLAGS "-Mfree -Mextend -mcmodel=medium -tp px"
-        setenv myCFLAGS "-O2"
-        #setenv extra_lib "-lextra"
-        #setenv mpi_lib "-lmpi"   #> -lmpich for mvapich or -lmpi for openmpi
-        setenv extra_lib ""
-        setenv mpi_lib ""   #> -lmpich for mvapich or -lmpi for openmpi
+        export myFC=/opt/compluvium/openmpi/bin/mpifort
+        export myCC=/opt/compluvium/openmpi/bin/mpicc
+        export myFSTD=""
+        export myDBG=""
+        export myFFLAGS="-fast"
+        export myFRFLAGS="-fast"
+        export myCFLAGS="-O2"
+        export extra_lib=""
+        export mpi_lib=""   #> -lmpich for mvapich or -lmpi for openmpi
 
         ;;
 
