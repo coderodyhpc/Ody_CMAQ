@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #> Critical Folder Locations
- export CMAQ_HOME=/home/ubuntu/CMAQv5.4
- export CMAQ_REPO=/home/ubuntu/CMAQv5.4
+ export CMAQ_HOME=/var/home/core/CMAQv5.4
+ export CMAQ_REPO=/var/home/core/CMAQv5.4
  export CMAQ_DATA=$CMAQ_HOME/data
  [ ! -d $CMAQ_DATA ] && mkdir -p $CMAQ_DATA
 
